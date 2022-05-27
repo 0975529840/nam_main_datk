@@ -47,7 +47,7 @@ void wifi_disconect_write_sd_card_task(void *pvParameters)
     for (;;)
     {
         xEventGroupWaitBits(sd_card_write_event_group, SD_CARD_WRITE_BIT, pdFALSE, pdFALSE, portMAX_DELAY);
-        sd_card_write(file_disconnect_wifi_data, temperature, humidity);
+        sd_card_write(temperature, humidity);
         printf("WRITEN TO SD CARD\n");
         esp_wifi_connect();
         ESP_LOGI(TAG, "retry to connect to the AP");
@@ -118,7 +118,7 @@ void wifi_connect_read_sd_card_task(void *pvParameters)
         xEventGroupWaitBits(sd_card_write_event_group, SD_CARD_READ_BIT, pdTRUE, pdFALSE, portMAX_DELAY);
         for (int j = 0; j < id; j++)
         {
-            messages_data_t messages_send = sd_card_read(file_disconnect_wifi_data, line);
+            messages_data_t messages_send = sd_card_read(line);
             printf("READED FROM SD CARD\n");
             char *json_string_send = json_creat(messages_send.id, messages_send.temperature, messages_send.humidity);
             printf("%s\n", json_string_send);
@@ -142,8 +142,8 @@ void app_main(void)
 {
     nvs_flash_init();
     sd_card_init();
-    wifi_connection();
     wifi_handler_set_callback(wifi_handler);
+    wifi_connection();
     vTaskDelay(5000 / portTICK_PERIOD_MS);
     printf("WIFI was initiated ...........\n");
     mqtt_app_start();

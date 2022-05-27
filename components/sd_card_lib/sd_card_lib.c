@@ -68,9 +68,9 @@ void sd_card_init(void)
     sdmmc_card_print_info(stdout, card);
 }
 
-void sd_card_write(const char* filename, int temperature, int humidity)
+void sd_card_write(int temperature, int humidity)
 {
-    FILE* f = fopen(filename, "a");
+    FILE* f = fopen(file_disconnect_wifi_data, "a");
      if (id == 0) {
         fprintf(f, "%s, %s, %s\n", "ID", "temperature", "humidity");
     }
@@ -81,13 +81,13 @@ void sd_card_write(const char* filename, int temperature, int humidity)
     spi_bus_free(host.slot); */
 }
 
-messages_data_t sd_card_read(const char* filename, uint32_t line_number)
+messages_data_t sd_card_read(uint32_t line_number)
 {
     uint32_t i = 0;
     char* token;
     char buffer[128];
     messages_data_t messages_data;
-    FILE* f = fopen(filename, "r");
+    FILE* f = fopen(file_disconnect_wifi_data, "r");
     while ((fgets((char *)buffer, sizeof(buffer), f))) {
         i++;
         if (i == line_number) {

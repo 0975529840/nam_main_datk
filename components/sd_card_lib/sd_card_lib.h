@@ -15,8 +15,8 @@ typedef struct {
 } messages_data_t;
 
 void sd_card_init(void);
-void sd_card_write(const char* filename, int temperature, int humidity);
+void sd_card_write(int temperature, int humidity);
 char* json_creat(int id, int temperature, int humidity);
-messages_data_t sd_card_read(const char* filename, uint32_t line_number);
+messages_data_t sd_card_read(uint32_t line_number);
 
 #endif
