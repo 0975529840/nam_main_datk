@@ -60,6 +60,8 @@ void wifi_handler(void *event_handler_arg, esp_event_base_t event_base, int32_t 
 {
     if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_DISCONNECTED)
     {
+        mqtt_app_disconnect();
+        mqtt_app_stop();
         if (s_retry_num < 5)
         {
             esp_wifi_connect();

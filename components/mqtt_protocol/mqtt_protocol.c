@@ -76,3 +76,11 @@ int mqtt_app_pulish(const char *topic, const char *data, int len, int qos, int r
 {
     return esp_mqtt_client_publish(client, topic, data, len, qos, retain);
 }
+void mqtt_app_stop(void)
+{
+    esp_mqtt_client_stop(client);
+}
+void mqtt_app_disconnect(void)
+{
+    esp_mqtt_client_disconnect(client);
+}
