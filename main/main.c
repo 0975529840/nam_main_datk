@@ -7,6 +7,8 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
+#include <sys/stat.h>
+#include <sys/unistd.h>
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/event_groups.h"
@@ -25,7 +27,7 @@
 
 #include "mqtt_protocol.h"
 #include "sd_card_lib.h"
-#include "wifi_connect.h"
+#include "wifi_connect_lib.h"
 
 EventGroupHandle_t sd_card_write_event_group;
 uint32_t id = 0;
@@ -56,12 +58,12 @@ void wifi_disconect_write_sd_card_task(void *pvParameters)
         vTaskDelete(NULL);
     }
 }
-void wifi_handler(void *event_handler_arg, esp_event_base_t event_base, int32_t event_id, void *event_data)
+void wifi_handler(esp_event_base_t event_base, int32_t event_id, void *event_data)
 {
     if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_DISCONNECTED)
     {
-        mqtt_app_disconnect();
-        mqtt_app_stop();
+        /* mqtt_app_disconnect();
+        mqtt_app_stop(); */
         if (s_retry_num < 5)
         {
             esp_wifi_connect();

@@ -1,5 +1,5 @@
-#ifndef WIFI_CONNECT_H_
-#define WIFI_CONNECT_H_
+#ifndef WIFI_CONNECT_LIB_H_
+#define WIFI_CONNECT_LIB_H_
 
 #include "sd_card_lib.h"
 #include "esp_system.h"

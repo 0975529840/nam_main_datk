@@ -10,7 +10,7 @@
 
 #include "mqtt_client.h"
 #include "sd_card_lib.h"
-#include "wifi_connect.h"
+#include "wifi_connect_lib.h"
 
 static const char *TAG = "MQTT_TCP";
 esp_mqtt_client_handle_t even_data_parameters;
@@ -24,7 +24,7 @@ static esp_err_t mqtt_event_handler_cb(esp_mqtt_event_handle_t event)
 
         ESP_LOGI(TAG, "MQTT_EVENT_CONNECTED");
         esp_mqtt_client_subscribe(client, "my_topic", 0);
-        // esp_mqtt_client_publish(client, "my_topic", json_creat(5, 35, 85), 0, 1, 0);
+        esp_mqtt_client_publish(client, "my_topic", json_creat(5, 35, 85), 0, 1, 0);
         break;
     case MQTT_EVENT_DISCONNECTED:
         ESP_LOGI(TAG, "MQTT_EVENT_DISCONNECTED");

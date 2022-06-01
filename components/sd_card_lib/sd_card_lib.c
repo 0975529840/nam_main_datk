@@ -9,7 +9,7 @@
 #include <sys/unistd.h>
 
 #include "sd_card_lib.h"
-#include "wifi_connect.h"
+#include "wifi_connect_lib.h"
 
 static const char *TAG = "example";
 const char* file_disconnect_wifi_data = MOUNT_POINT"/disconnect_wifi_data.csv";
@@ -70,12 +70,18 @@ void sd_card_init(void)
 
 void sd_card_write(int temperature, int humidity)
 {
+    printf("SD CARD WRITE\n");
     FILE* f = fopen(file_disconnect_wifi_data, "a");
-     if (id == 0) {
-        fprintf(f, "%s, %s, %s\n", "ID", "temperature", "humidity");
+    if (f == NULL) {
+        printf("CHUA MO FILE\n");
+    }
+      if (id == 0) {
+        printf("FIRST WRITE\n");
+        fprintf((FILE*)f, "%s, %s, %s\n", "ID", "temperature", "humidity");
     }
     id++;
-    fprintf((FILE*)f, "%d, %d, %d\n", id, temperature, humidity);
+    printf("SECOND WRITE\n");
+    fprintf(f, "%d, %d, %d\n", id, temperature, humidity);
     fclose(f);
     /* esp_vfs_fat_sdcard_unmount(MOUNT_POINT, card);
     spi_bus_free(host.slot); */

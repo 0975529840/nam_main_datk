@@ -16,7 +16,7 @@
 
 #include "mqtt_protocol.h"
 #include "sd_card_lib.h"
-#include "wifi_connect.h"
+#include "wifi_connect_lib.h"
 
 
 static wifi_handler_t wifi_handler = NULL;
@@ -79,7 +79,7 @@ static void wifi_event_handler(void *event_handler_arg, esp_event_base_t event_b
     //         printf("FILE NOT EXISTS\n");
     //     }
     // }
-    wifi_handler(event_base, event_id, event_data);
+    wifi_handler(event_base, event_id, &event_data);
 }
 
 void wifi_connection()
